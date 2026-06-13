@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -28,7 +29,8 @@ public class DaoSecurityConfig {
         // For Database we have a DAO authentication Provide
         DaoAuthenticationProvider provider=new DaoAuthenticationProvider(userDetailsService);
 //        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());// This is if we do not have any password encoder and we want to check with PlainText
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));// This is the BCrypt Password Encoder and this should be of same strength as of Register User
         return provider;
     }
 

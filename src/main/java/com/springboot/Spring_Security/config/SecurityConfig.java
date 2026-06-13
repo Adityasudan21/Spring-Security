@@ -1,13 +1,19 @@
 package com.springboot.Spring_Security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -24,7 +30,7 @@ public class SecurityConfig {
 
         security.csrf(customizer -> customizer.disable()); // This will remove CSRF Token
         security.authorizeHttpRequests(request->request.anyRequest().authenticated()); // This will create Basic Auth but it will not create input form
-        security.formLogin(Customizer.withDefaults()); // This will give the basic Login form and Logout Route
+//        security.formLogin(Customizer.withDefaults()); // This will give the basic Login form and Logout Route
         security.httpBasic(Customizer.withDefaults()); // This will make to send Auth everytime we request. (Best for Postman)
 
         //This will nulify the use of Form Login and we need BasicAuth everytime we request
@@ -33,7 +39,7 @@ public class SecurityConfig {
         return security.build();  // This will bypass and create a new Session by Default
     }
     //Imperitive Way
-    @Bean // Spring will create object for you by Default
+//    @Bean // Spring will create object for you by Default
     public SecurityFilterChain securityFilterChain1(HttpSecurity security) throws Exception{
 
         //Disable CSRF

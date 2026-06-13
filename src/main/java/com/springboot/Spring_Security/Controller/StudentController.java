@@ -29,7 +29,7 @@ public class StudentController {
     }
 
     // Method to get CSRF token
-    @GetMapping("csrf-token")
+    @GetMapping("/csrf-token")
     public CsrfToken getCSRFToken(HttpServletRequest httpRequest){
         return (CsrfToken) httpRequest.getAttribute("_csrf");
     }
